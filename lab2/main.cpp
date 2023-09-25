@@ -6,8 +6,13 @@ double calcTime(unsigned t0 , unsigned t1) {
  return (double(t1-t0)/CLOCKS_PER_SEC);
 }
 
+double a = 0 , b = 0;
+
 void nested_loops_3(int n) {
-    int A[n][n]  , B[n][n] , C[n][n];
+    std::vector<std::vector<int>> A(n, std::vector<int>(n));
+    std::vector<std::vector<int>> B(n, std::vector<int>(n));
+    std::vector<std::vector<int>> C(n, std::vector<int>(n));
+
     for(int i = 0 ; i < n ; i++) {
         for(int j = 0 ; j < n ; j++) {
             A[i][j] = i + 1;
@@ -32,11 +37,15 @@ void nested_loops_3(int n) {
     //     }
     //     cout<<endl;
     // }
-    cout << "Execution Time nested_loops_3: " << calcTime(t0 , t1) << endl;
+    cout << n << " Execution Time nested_loops_3: " << calcTime(t0 , t1) << endl;
+    //a += calcTime(t0 , t1);
 }
 
-void nested_loops_blocks(int n) {
-    int blockSize = n/2 , A[n][n] , B[n][n] , C[n][n];
+void nested_loops_blocks(int n , int blockSize) {
+    std::vector<std::vector<int>> A(n, std::vector<int>(n));
+    std::vector<std::vector<int>> B(n, std::vector<int>(n));
+    std::vector<std::vector<int>> C(n, std::vector<int>(n));
+    
     unsigned t0 , t1;
     for(int i = 0 ; i < n ; i++) {
         for(int j = 0 ; j < n ; j++) {
@@ -61,8 +70,8 @@ void nested_loops_blocks(int n) {
         }
     }
     t1 = clock();
-    cout << "Execution Time nested_loops_blocks: " << calcTime(t0 , t1) << endl;
-
+    cout << n << " " << blockSize << " Execution Time nested_loops_blocks: " << calcTime(t0 , t1) << endl;
+    //b += calcTime(t0 , t1);
     // for(int i = 0 ; i < n ; i++) {
     //     for(int j = 0 ; j < n ; j++) {
     //         cout<<C[i][j]<<" ";
@@ -72,11 +81,29 @@ void nested_loops_blocks(int n) {
 
 }
 
-int main(){
-    int n = 50;
+int main2(){
+    int n = 100;
     nested_loops_3(n);
-    //cout<<endl;
-    nested_loops_blocks(n);
+    cout<<endl;
+    nested_loops_blocks(n , n/2);
+    return 0;
+}
+
+
+int main(){
+    int n = 800;
+
+    //for(int j = 0 ; j < 100 ; j++) {
+      //  cout<<j<<"\n";
+        //nested_loops_3(n);
+        //cout<<endl;
+        nested_loops_blocks(n , n/2);
+    //}
+
+    //cout<<endl<<a/100<<" "<<b/100;
+
+
+
     return 0;
 }
 
